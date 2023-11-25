@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import getPathName from './utils/extractPath.js';
 import CreateCollections from './utils/dataParsing.js';
+import authMiddleWare from './utils/authMiddleware.js';
 
 // Create DB collections
 const createCollections = new CreateCollections();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(getPathName(), '../public')));
 
+app.use(authMiddleWare);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

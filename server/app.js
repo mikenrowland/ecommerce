@@ -3,18 +3,21 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import getPathName from './utils/extractPath.js';
+import CreateCollections from './utils/dataParsing.js';
+
+// Create DB collections
+const createCollections = new CreateCollections();
+createCollections.init();
 
 const app = express();
-
-// Get path name since __dirname is not defined in ES module scope
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(getPathName(), '../public')));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

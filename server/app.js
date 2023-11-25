@@ -7,6 +7,8 @@ import getPathName from './utils/extractPath.js';
 import CreateCollections from './utils/dataParsing.js';
 import authMiddleWare from './utils/authMiddleware.js';
 
+import indexRouter from './routes/index.js';
+
 // Create DB collections
 const createCollections = new CreateCollections();
 createCollections.init();
@@ -20,6 +22,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(getPathName(), '../public')));
 
 app.use(authMiddleWare);
+
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
